@@ -7,7 +7,6 @@ const Header = () => {
       <h4 className="font-bold text-2xl ">Not</h4>
       <div className=" max-sm:max-w-56">
         <label className="input input-bordered flex items-center gap-2">
-          <input type="text" className="grow" placeholder="Search" />
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 16 16"
@@ -20,11 +19,12 @@ const Header = () => {
               clipRule="evenodd"
             />
           </svg>
+          <input type="text" className="grow" placeholder="Search" />
         </label>
       </div>
 
       <div className="sm:flex gap-2 hidden ">
-        <p className="w-8 h-8 rounded-full cursor-pointer flex justify-center items-center text-white font-semibold bg-blue-400">
+        <p className="w-8 h-8 rounded-full cursor-pointer flex justify-center items-center text-white font-semibold bg-violet-400">
           KM
         </p>
         <Link to="/" className="underline">
@@ -41,7 +41,7 @@ const Header = () => {
           className="dropdown-content  z-[1] menu p-3 shadow bg-base-100 rounded-box w-48"
         >
           <div className="flex gap-3 items-center">
-          <p className="w-8 h-8 rounded-full cursor-pointer flex justify-center items-center text-white font-semibold bg-blue-400">
+          <p className="w-8 h-8 rounded-full cursor-pointer flex justify-center items-center text-white font-semibold bg-violet-400">
             KM
           </p>
           <Link to="/" className="underline text-xl">
