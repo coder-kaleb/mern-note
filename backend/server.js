@@ -8,7 +8,7 @@ const PORT = process.env.PORT;
 const app = e();
 
 // middleware
-app.use("/dashboard", noteRouter);
+app.use("/api/note", noteRouter);
 app.use(e.json());
 
 app.get("/", (req, res) => {
