@@ -6,9 +6,6 @@
   html {
     font-family: "Poppins", sans-serif;
   }
-  * {
-    /* scrollbar-color: rgb(155, 136, 250) transparent; */
-  }
 }
 
 /* CUSTOM-SCROLLBAR-STYLE */
@@ -33,6 +30,3 @@
   /* border-radius: 8px; */
   background-color: rgb(114, 85, 255);
 }
-
-
-
