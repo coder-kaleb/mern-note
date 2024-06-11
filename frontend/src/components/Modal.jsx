@@ -5,6 +5,14 @@ import { IoIosAdd } from "react-icons/io";
 const Modal = ({ note, setNote, handleSubmit }) => {
   const [tagtext, setTagtext] = useState("");
   // console.log(tagtext);
+  const handleTags = () => {
+    if (!tagtext) return;
+    setNote((prev) => ({
+      ...prev,
+      tags: [...prev.tags, { id: crypto.randomUUID(), lable: tagtext }],
+    }));
+    setTagtext("");
+  };
   return (
     <>
       <button
@@ -23,7 +31,7 @@ const Modal = ({ note, setNote, handleSubmit }) => {
               setNote((prev) => ({ ...prev, title: e.target.value }))
             }
             placeholder="I will do something positive"
-            className="input input-bordered mb-3 w-full"
+            className="input input-bordered mb-3 w-full text-lg font-semibold"
           />
           <h3 className="pl-1 text-lg font-medium text-zinc-400">Content</h3>
           <textarea
@@ -38,8 +46,11 @@ const Modal = ({ note, setNote, handleSubmit }) => {
             <h3 className="pl-1 text-lg font-medium text-zinc-400">#Tags</h3>
             <div className="mb-2">
               {note.tags?.map((tag) => (
-                <span key={tag} className="mr-1 rounded-md bg-violet-200 px-1">
-                  {tag}
+                <span
+                  key={tag.id}
+                  className="mr-1 rounded-md bg-violet-200 px-1"
+                >
+                  {tag.lable}
                 </span>
               ))}
             </div>
@@ -51,18 +62,7 @@ const Modal = ({ note, setNote, handleSubmit }) => {
                 value={tagtext}
                 onChange={(e) => setTagtext(e.target.value)}
               />
-              <button
-                className="btn btn-square"
-                onClick={() => {
-                  if (!tagtext) return;
-                  console.log("what is th");
-                  setNote((prev) => ({
-                    ...prev,
-                    tags: [...prev.tags, tagtext],
-                  }));
-                  setTagtext("");
-                }}
-              >
+              <button className="btn btn-square" onClick={handleTags}>
                 <IoIosAdd className="size-8" />
               </button>
             </div>

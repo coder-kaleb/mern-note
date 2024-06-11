@@ -8,21 +8,26 @@ const DashboardNote = () => {
     tags: [],
   });
   console.log(note);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
     try {
-      const res = fetch("http://localhost:5000/api/note", {
+      const res = await fetch(`${apiBaseUrl}/api/note/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(note),
       });
-      if (res.ok) {
-        setNote({ title: "", content: "", tags: [] });
+      const resnote = await res.json();
+      console.log(resnote);
+      if (!res.ok) {
+        throw new Error("unable to create the note");
       }
+      setNote({ title: "", content: "", tags: [] });
     } catch (error) {
-      alert(error);
+      console.log(error.message);
     }
   };
   return (
