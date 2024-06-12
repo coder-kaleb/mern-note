@@ -1,29 +1,22 @@
 import { Schema, model } from "mongoose";
 
 const tagSchema = new Schema({
-  id: {
-    type: String,
-    // required: true,
-  },
-  label: {
-    type: String,
-    // required: true,
-  },
+  label: String,
 });
 
 const noteSchema = new Schema(
   {
     title: {
       type: String,
-      // required: true,
+      required: true,
     },
     content: {
       type: String,
-      // required: true,
+      required: true,
     },
     tags: {
       type: [tagSchema],
-      // required: true,
+      required: true,
     },
   },
   { timestamps: true }

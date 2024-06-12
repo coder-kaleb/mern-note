@@ -2,6 +2,7 @@ import { useState } from "react";
 import Modal from "../components/Modal";
 import Note from "../components/Note";
 const DashboardNote = () => {
+  const [loading, setLoading] = useState(false);
   const [note, setNote] = useState({
     title: "",
     content: "",
@@ -13,6 +14,7 @@ const DashboardNote = () => {
     e.preventDefault();
     const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
     try {
+      setLoading(true);
       const res = await fetch(`${apiBaseUrl}/api/note/`, {
         method: "POST",
         headers: {
@@ -26,8 +28,10 @@ const DashboardNote = () => {
         throw new Error("unable to create the note");
       }
       setNote({ title: "", content: "", tags: [] });
+      setLoading(false);
     } catch (error) {
-      console.log(error.message);
+      setLoading(false);
+      console.error(error.message);
     }
   };
   return (
@@ -43,7 +47,12 @@ const DashboardNote = () => {
         <Note />
         <Note />
       </div>
-      <Modal note={note} setNote={setNote} handleSubmit={handleSubmit} />
+      <Modal
+        note={note}
+        loading={loading}
+        setNote={setNote}
+        handleSubmit={handleSubmit}
+      />
     </section>
   );
 };

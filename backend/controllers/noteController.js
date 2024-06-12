@@ -8,7 +8,10 @@ const getNote = async (req, res) => {
 // CREATE NOTE
 const createNote = async (req, res) => {
   const { title, content, tags } = req.body;
+  console.log(tags);
+  // working on models from video
   const note = await Note.create({ title, content, tags });
+
   console.log(note);
   res.status(201).json(note);
 };

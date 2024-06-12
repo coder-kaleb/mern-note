@@ -2,14 +2,14 @@
 import { useState } from "react";
 import { IoIosAdd } from "react-icons/io";
 
-const Modal = ({ note, setNote, handleSubmit }) => {
+const Modal = ({ note, setNote, loading, handleSubmit }) => {
   const [tagtext, setTagtext] = useState("");
   // console.log(tagtext);
   const handleTags = () => {
     if (!tagtext) return;
     setNote((prev) => ({
       ...prev,
-      tags: [...prev.tags, { id: crypto.randomUUID(), lable: tagtext }],
+      tags: [...prev.tags, { lable: tagtext }],
     }));
     setTagtext("");
   };
@@ -23,6 +23,12 @@ const Modal = ({ note, setNote, handleSubmit }) => {
       </button>
       <dialog id="my_modal_2" className="modal">
         <div className="modal-box">
+          <form method="dialog" className="modal-backdrop">
+            <button className="btn btn-circle btn-ghost btn-sm absolute right-2 top-2 text-black">
+              ✕
+            </button>
+            {/* <button>close</button> */}
+          </form>
           <h3 className="pl-1 text-lg font-medium text-zinc-400">Title!</h3>
           <input
             type="text"
@@ -47,7 +53,7 @@ const Modal = ({ note, setNote, handleSubmit }) => {
             <div className="mb-2">
               {note.tags?.map((tag) => (
                 <span
-                  key={tag.id}
+                  key={crypto.randomUUID()}
                   className="mr-1 rounded-md bg-violet-200 px-1"
                 >
                   {tag.lable}
@@ -71,13 +77,12 @@ const Modal = ({ note, setNote, handleSubmit }) => {
             className="btn btn-secondary btn-active"
             type="submit"
             onClick={handleSubmit}
+            disabled={loading ? "disabled" : ""}
           >
+            <span className={loading ? "loading loading-spinner" : ""}></span>
             Submit
           </button>
         </div>
-        <form method="dialog" className="modal-backdrop">
-          <button>close</button>
-        </form>
       </dialog>
     </>
   );
