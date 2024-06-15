@@ -10,8 +10,11 @@ const app = e();
 // middleware
 app.use(
   cors({
-    origin: "http://localhost:3000",
-    methods: ["GET", "POST", "DELETE", "PATCH"],
+    origin: [
+      "http://localhost:3000",
+      "https://4fpfkn86-3000.uks1.devtunnels.ms",
+    ],
+    methods: ["GET", "POST", "DELETE", "PATCH", "PUT"],
   })
 );
 app.use(e.json());

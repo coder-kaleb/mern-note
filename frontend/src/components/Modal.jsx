@@ -2,32 +2,70 @@
 import { useState } from "react";
 import { IoIosAdd } from "react-icons/io";
 
-const Modal = ({ note, setNote, loading, handleSubmit }) => {
+const Modal = ({
+  note,
+  setNote,
+  loading,
+  handleSubmit,
+  setIsOpen,
+  dialogRef,
+  isUpdate,
+  setIsUpdate,
+}) => {
   const [tagtext, setTagtext] = useState("");
-  // console.log(tagtext);
   const handleTags = () => {
     if (!tagtext) return;
     setNote((prev) => ({
       ...prev,
-      tags: [...prev.tags, { lable: tagtext }],
+      tags: [...prev.tags, tagtext],
     }));
     setTagtext("");
+  };
+  const handleClick = async (e) => {
+    const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
+
+    if (isUpdate) {
+      try {
+        const res = await fetch(`${apiBaseUrl}/api/note/${note._id}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(note),
+        });
+        if (!res.ok) {
+          throw new Error("Can't update the note");
+        }
+        setNote({ title: "", content: "", tags: [] });
+        setIsUpdate(false);
+      } catch (error) {
+        console.error(error.message);
+      }
+      return;
+    }
+    handleSubmit(e);
   };
   return (
     <>
       <button
         className="fixed bottom-4 right-5 flex size-10 cursor-pointer items-center justify-center rounded-lg bg-violet-700 transition-all hover:scale-125"
-        onClick={() => document.getElementById("my_modal_2").showModal()}
+        onClick={() => {
+          setIsOpen(true);
+        }}
       >
         <IoIosAdd className="size-7 text-white" />
       </button>
-      <dialog id="my_modal_2" className="modal">
+      <dialog id="my_modal_2" ref={dialogRef} className="modal">
         <div className="modal-box">
           <form method="dialog" className="modal-backdrop">
-            <button className="btn btn-circle btn-ghost btn-sm absolute right-2 top-2 text-black">
+            <button
+              className="btn btn-circle btn-ghost btn-sm absolute right-2 top-2 text-black"
+              onClick={() => {
+                setIsOpen(false);
+              }}
+            >
               ✕
             </button>
-            {/* <button>close</button> */}
           </form>
           <h3 className="pl-1 text-lg font-medium text-zinc-400">Title!</h3>
           <input
@@ -56,7 +94,7 @@ const Modal = ({ note, setNote, loading, handleSubmit }) => {
                   key={crypto.randomUUID()}
                   className="mr-1 rounded-md bg-violet-200 px-1"
                 >
-                  {tag.lable}
+                  {tag}
                 </span>
               ))}
             </div>
@@ -76,14 +114,15 @@ const Modal = ({ note, setNote, loading, handleSubmit }) => {
           <button
             className="btn btn-secondary btn-active"
             type="submit"
-            onClick={handleSubmit}
+            onClick={handleClick}
             disabled={loading ? "disabled" : ""}
           >
             <span className={loading ? "loading loading-spinner" : ""}></span>
-            Submit
+            {isUpdate ? "Update" : "Submit"}
           </button>
         </div>
       </dialog>
+      {/* <DialogSke /> */}
     </>
   );
 };

@@ -1,8 +1,8 @@
 import { Schema, model } from "mongoose";
 
-const tagSchema = new Schema({
-  label: String,
-});
+// const tagSchema = new Schema({
+//   label: String,
+// });
 
 const noteSchema = new Schema(
   {
@@ -15,8 +15,7 @@ const noteSchema = new Schema(
       required: true,
     },
     tags: {
-      type: [tagSchema],
-      required: true,
+      type: [String],
     },
   },
   { timestamps: true }
