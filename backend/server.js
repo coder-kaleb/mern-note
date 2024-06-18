@@ -27,7 +27,7 @@ app.get("/", (req, res) => {
 try {
   connectToMongodb();
 } catch (error) {
-  console.log(error);
+  console.log(error.message);
 }
 app.listen(PORT, () => {
   console.log(`server start running on ${PORT}`);

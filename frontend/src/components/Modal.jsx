@@ -11,6 +11,7 @@ const Modal = ({
   dialogRef,
   isUpdate,
   setIsUpdate,
+  setFetchAllNote,
 }) => {
   const [tagtext, setTagtext] = useState("");
   const handleTags = () => {
@@ -36,6 +37,7 @@ const Modal = ({
         if (!res.ok) {
           throw new Error("Can't update the note");
         }
+        setFetchAllNote(true);
         setNote({ title: "", content: "", tags: [] });
         setIsUpdate(false);
       } catch (error) {

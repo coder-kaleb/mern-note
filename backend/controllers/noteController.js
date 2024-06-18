@@ -55,7 +55,15 @@ const updateNote = async (req, res) => {
 const deleteNote = async (req, res) => {
   const { id } = req.params;
 
-  res.send(`note delted with id: ${id}`);
+  try {
+    const deletedNote = await Note.deleteOne({ _id: id });
+    res.json(deletedNote).status(200);
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).json({ msg: "unable to delete note" });
+  }
+
+  // res.send(`note delted with id: ${id}`);
 };
 
 export { createNote, deleteNote, getNote, updateNote, getSingleNote };

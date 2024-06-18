@@ -6,6 +6,7 @@ const DashboardNote = () => {
   const [data, setData] = useState([]);
   const [isUpdate, setIsUpdate] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [fetchAllNote, setFetchAllNote] = useState(true);
   const [note, setNote] = useState({
     title: "",
     content: "",
@@ -40,6 +41,7 @@ const DashboardNote = () => {
       }
       setNote({ title: "", content: "", tags: [] });
       setLoading(false);
+      setFetchAllNote(true);
     } catch (error) {
       setLoading(false);
       console.error(error.message);
@@ -51,8 +53,11 @@ const DashboardNote = () => {
       const notes = await res.json();
       setData(notes);
     };
-    getAllNotes();
-  }, [apiBaseUrl, note]);
+    if (fetchAllNote) {
+      getAllNotes();
+      setFetchAllNote(false);
+    }
+  }, [apiBaseUrl, fetchAllNote, isUpdate]);
 
   return (
     <section className="relative w-full p-5">
@@ -68,6 +73,7 @@ const DashboardNote = () => {
               setIsOpen={setIsOpen}
               setNote={setNote}
               setIsUpdate={setIsUpdate}
+              setFetchAllNote={setFetchAllNote}
             />
           ))
         ) : (
@@ -83,6 +89,7 @@ const DashboardNote = () => {
         dialogRef={dialogRef}
         setIsUpdate={setIsUpdate}
         isUpdate={isUpdate}
+        setFetchAllNote={setFetchAllNote}
       />
     </section>
   );
